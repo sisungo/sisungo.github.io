@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on sisungo</title><link>https://sisungo.github.io/post/</link><description>Recent content in Posts on sisungo</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 01 Jan 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://sisungo.github.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Hi there!</title><link>https://sisungo.github.io/p/about-me/</link><pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate><guid>https://sisungo.github.io/p/about-me/</guid><description>&lt;img src="https://sisungo.github.io/p/about-me/cover.jpg" alt="Featured image of post Hi there!" />&lt;h2 id="关于我">关于我&lt;/h2>
+&lt;p>你好！你可以叫我 &lt;code>sisungo&lt;/code> 或者 &lt;code>沫凌&lt;/code>；做个简单的自我介绍：&lt;/p>
+&lt;ul>
+&lt;li>💗 计算机/ACG 爱好者&lt;/li>
+&lt;li>🔬 喜欢的语言：&lt;code>🦀 Rust&lt;/code> / &lt;code>C#&lt;/code>&lt;/li>
+&lt;li>🌱 正在学习的：&lt;code>null&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="在做的项目">在做的项目&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://github.com/sisungo/airup" target="_blank" rel="noopener"
+>&lt;code>airup&lt;/code>&lt;/a>: 一个服务 supervisor 和 init 守护进程&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/sisungo/airlog" target="_blank" rel="noopener"
+>&lt;code>airlog&lt;/code>&lt;/a>: 一个轻量级、全功能、可伸缩的分布式日志服务&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/sisungo/airboot" target="_blank" rel="noopener"
+>&lt;code>airboot&lt;/code>&lt;/a>: 一个现代化的引导加载程序&lt;/li>
+&lt;li>&lt;code>airdocs&lt;/code>: 一个现代化、函数式的帮助文档系统，支持命令行和 Web&lt;/li>
+&lt;/ul></description></item></channel></rss>
