@@ -225,7 +225,7 @@ Illegal Instruction
 我们注意到，对于所有使用了 `fs` 段寄存器的指令，其第一个字节是 `0x64`。将它替换成 `0x65` 就可以变成一条新指令，这条指令和原来的指令唯一的
 区别就是把引用的段寄存器从 `fs` 替换成了 `gs`。
 
-一个相当 tricky 但有效的方法：
+所以... 一个相当 tricky 但有效的方法：
 
 ```rust
 #[cfg(target_arch = "x86_64")]
@@ -258,10 +258,46 @@ unsafe extern "C" fn handle_sigsegv(_: c_int, info: &libc::siginfo_t, ctx: &mut 
 如果出错位置位于 macOS 代码，那么会 `raise` 段错误，最终使程序立即退出，这是预期的情况。如果出错位置位于 Linux 代码，那么既能在使用
 `fs` 段寄存器时替换到 `gs`，又能在其他时候调用 Linux 程序设定的信号处理程序，很好！
 
-然而，macOS 本身大量依赖于 `gs` 寄存器做线程本地存储。所以，我们设置一个全局映射，允许用 TID 获取 macOS 的 `gsbase` 值。这样，当我们
+然而，macOS 本身大量依赖于 `gs` 寄存器做线程本地存储。所以，我们设置一个全局映射，允许用线程 ID 获取 macOS 的 `gsbase` 值。这样，当我们
 切换到 Linux 代码时，就使用 Linux 程序设置的 `gsbase`；跳转到 macOS 代码时，就恢复 macOS 原本的 `gsbase`。
 
-做好这些工作，我们再次执行 "Hello World"，观察到：
+
+要实现上面的目标，需要知道如何读取和设置 `gsbase` 寄存器的值。对于设置 `gsbase` 寄存器的值，很容易搜索到这样的方法，即调用下列私有 API：
+
+```rust
+unsafe extern "C" {
+    fn _thread_set_tsd_base(gsbase: *mut u8);
+}
+```
+
+... 但如何读取 `gsbase` 寄存器的值呢？没有一个直接做到这件事情的系统调用；`rdgsbase` 和 `rdmsr` 指令不可用；尝试从 macOS 的
+`struct pthread` 获取自引用指针似乎可行，但其布局是非常可能会随系统更新而变化的。所幸，我从 Wine 源代码中找到了这个方法：
+
+```rust
+fn current_gsbase() -> usize {
+    let mut tiinfo: libc::thread_identifier_info = unsafe { std::mem::zeroed() };
+    let mut info_count = libc::THREAD_IDENTIFIER_INFO_COUNT;
+    let thread_self = unsafe { mach_thread_self() };
+    let kr = unsafe {
+        libc::thread_info(
+            thread_self,
+            libc::THREAD_IDENTIFIER_INFO as _,
+            (&raw mut tiinfo).cast(),
+            (&raw mut info_count).cast(),
+        )
+    };
+    unsafe {
+        mach_port_deallocate(mach2::traps::mach_task_self(), thread_self);
+    }
+    if kr == libc::KERN_SUCCESS {
+        tiinfo.thread_handle as usize
+    } else {
+        0
+    }
+}
+```
+
+大功告成！做好这些工作，我们再次执行 "Hello World"，观察到：
 
 ```text
 Hello World
