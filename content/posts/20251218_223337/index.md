@@ -6,6 +6,6 @@ summary: "今天办理了我的第一张 MasterCard 借记卡 :-)"
 tags: ["日常"]
 ---
 
-今天办理了我的第一张 MasterCard 借记卡 :-)
+今天办理了我的第一张 MasterCard 借记卡 :-\)
 
 ![image](featured.jpg)
