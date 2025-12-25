@@ -8,9 +8,9 @@ series: ["MacTux 开发笔记"]
 series_order: 1
 ---
 
-## 适用于 macOS 的 Linux 兼容层？
+> 注意，这是对之前的开发历程的回顾，文章更新进度远落后于 MacTux 实际开发进度。
 
-（注意，这是对之前的开发历程的回顾，文章更新进度远落后于 MacTux 实际开发进度。）
+## 适用于 macOS 的 Linux 兼容层？
 
 作为 ~~使用 macOS 的~~ Linux 深度用户，很多时候我会给 Linux 开发一些软件，不可避免地用到 Linux 特有的特性。在我的 MacBook Air 上，
 有这样的两个选择：
